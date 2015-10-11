@@ -9,8 +9,6 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/types.h>
-#include <wiringPi.h>
-#include <softPwm.h>
 #include <cstdint>
 #include <csignal>
 #include <pthread.h>
