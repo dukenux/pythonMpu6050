@@ -61,20 +61,20 @@ static void * fn_imu (void * p_data)
 	VectorInt16 aaReal;    // [x, y, z]            world-frame accel sensor measurements
 	
     // initialize device
-    printf("Initializing I2C devices...\n");
+    //printf("Initializing I2C devices...\n");
     mpu6050.initialize();
 
     // verify connection
-    printf("Testing device connections...\n");
-    printf(mpu6050.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
+    //printf("Testing device connections...\n");
+    //printf(mpu6050.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
 
     // load and configure the DMP
-    printf("Initializing DMP...\n");
+    //printf("Initializing DMP...\n");
     devStatus = mpu6050.dmpInitialize();
 
      if (devStatus == 0) {
         // turn on the DMP, now that it's ready
-        printf("Enabling DMP...\n");
+        //printf("Enabling DMP...\n");
         mpu6050.setDMPEnabled(true);
 
         // enable Arduino interrupt detection
@@ -84,13 +84,13 @@ static void * fn_imu (void * p_data)
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
 	   pthread_mutex_lock (& mpu.mutex_imu);	   
-	   printf("Préparartion imu en cours\n");
+	   //printf("Préparartion imu en cours\n");
 	   mpu.init_ok=1;
 	   pthread_mutex_unlock (& mpu.mutex_imu);      
-       printf("DMP ready!\n");
+       //printf("DMP ready!\n");
        // get expected DMP packet size for later comparison
        packetSize = mpu6050.dmpGetFIFOPacketSize();
-       printf("Full scale: %d\n",mpu6050.getFullScaleAccelRange());       
+       //printf("Full scale: %d\n",mpu6050.getFullScaleAccelRange());       
 	   while (1)
 	   {
 		  // get current FIFO count
@@ -202,7 +202,7 @@ extern "C" {
 		Py_InitModule3("imu", imu_funcs,"Inertial Module Unit");
 		/* Creation du thread pour l'imu. */
 		mpu.mutex_imu = PTHREAD_MUTEX_INITIALIZER;
-		printf ("Creation du thread imu !\n");
+		//printf ("Creation du thread imu !\n");
 		int ret = pthread_create (
 		  & mpu.thread_imu, NULL,
 		  fn_imu, NULL
@@ -212,6 +212,6 @@ extern "C" {
 			return;
 		}
 
-		printf("IMU is now ready, CTRL +C to stop\n");
+		//printf("IMU is now ready, CTRL +C to stop\n");
 	}
 }
